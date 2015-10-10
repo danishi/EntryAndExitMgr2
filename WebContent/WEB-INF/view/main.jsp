@@ -33,7 +33,7 @@ ArrayList<String> nameList = new ArrayList<String>();
 				<th>ビーコン名</th>
 				<th>部屋</th>
 				<th>状況</th>
-				<%-- <th>時刻</th> --%>
+				<th>時刻</th>
 			</tr>
 
 <%
@@ -77,15 +77,17 @@ for(String key : keySet){
 		<%= name %>
 				</td>
 
-<%--
+
 				<td><%
 		String time = "null";
 		try{
 			time = obj.getString("access_flag");
-		}catch(JSONException e){}%>
-		<%= time %>
+		}catch(JSONException e){}
+		Date date = new Date(Long.parseLong(time));
+		%>
+		<%= date %>
 				</td>
---%>
+
 			</tr>
 
 <% } %>
