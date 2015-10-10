@@ -33,7 +33,7 @@ ArrayList<String> nameList = new ArrayList<String>();
 				<th>ビーコン名</th>
 				<th>部屋</th>
 				<th>状況</th>
-				<th>時刻</th>
+				<%-- <th>時刻</th> --%>
 			</tr>
 
 <%
@@ -77,6 +77,7 @@ for(String key : keySet){
 		<%= name %>
 				</td>
 
+<%--
 				<td><%
 		String time = "null";
 		try{
@@ -84,8 +85,9 @@ for(String key : keySet){
 		}catch(JSONException e){}%>
 		<%= time %>
 				</td>
-
+--%>
 			</tr>
+
 <% } %>
 
 		</table><br>
