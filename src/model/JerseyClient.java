@@ -1,5 +1,8 @@
 package model;
 
+import java.util.Comparator;
+import java.util.TreeMap;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,8 +18,8 @@ public class JerseyClient {
 	public static String getJson() {
 		Client client = Client.create();
 		WebResource webResource = client
-				// 30件
-				.resource("https://mobile.ng.bluemix.net:443/data/rest/v1/apps/b055935a-0e02-49b4-a9e0-e95936f1f129/objects?classname=Item&start=0&num=30");
+				// 100件
+				.resource("https://mobile.ng.bluemix.net:443/data/rest/v1/apps/b055935a-0e02-49b4-a9e0-e95936f1f129/objects?classname=Item&start=0&num=100");
 				// 1件
 				//.resource("https://mobile.ng.bluemix.net:443/data/rest/v1/apps/b055935a-0e02-49b4-a9e0-e95936f1f129/objects?start=0&num=1");
 
@@ -47,6 +50,7 @@ public class JerseyClient {
 			attr[i] = objectObject[i].getJSONObject("attributes");
 		}
 
+
 		return attr;
 
 		//attributesObjectList.add(new JSONObject(objectObject[i].getString("attributes")));
@@ -54,4 +58,26 @@ public class JerseyClient {
 		// CreatedAtオブジェクトを取り出す
 		//createdAtObject = objectObject[0].getJSONObject("createdAt");
 	}
+
+	public static TreeMap<String, JSONObject> sortList(JSONObject[] rawAttr){
+		TreeMap<String, JSONObject> sortedAttr = new TreeMap<String, JSONObject>( new Comparator<String>() {
+			public int compare(String s, String n) {
+				return ((String) s).compareTo(n) * -1;
+			}
+		});
+
+		//TreeMap<String, JSONObject> sortedAttr = new TreeMap<String, JSONObject>();
+
+		for(JSONObject obj : rawAttr){
+			String key;
+
+			try{
+				key = obj.getString("access_flag");
+				sortedAttr.put(key, obj);
+			}catch(JSONException e){}
+		}
+
+		return sortedAttr;
+	}
+
 }
